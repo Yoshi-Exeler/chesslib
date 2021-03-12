@@ -50,8 +50,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/notnil/chess"
-	"github.com/notnil/chess/image"
+	"github.com/Yoshi-Exeler/chesslib"
+	"github.com/Yoshi-Exeler/chesslib/image"
 )
 
 func main() {

@@ -1,5 +1,5 @@
 # chess
-[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/notnil/chess)
+[![GoDoc](http://img.shields.io/badge/go-documentation-blue.svg?style=flat-square)](https://godoc.org/github.com/Yoshi-Exeler/chesslib)
 [![Coverage Status](https://coveralls.io/repos/notnil/chess/badge.svg?branch=master&service=github)](https://coveralls.io/github/notnil/chess?branch=master)
 [![Go Report Card](https://goreportcard.com/badge/notnil/chess)](https://goreportcard.com/report/notnil/chess)
 [![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/notnil/chess/master/LICENSE)
@@ -25,7 +25,7 @@
 **chess** can be installed using "go get".
 
 ```bash
-go get -u github.com/notnil/chess
+go get -u github.com/Yoshi-Exeler/chesslib
 ``` 
 
 ## Usage
@@ -39,7 +39,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/notnil/chess"
+	"github.com/Yoshi-Exeler/chesslib"
 )
 
 func main() {
@@ -83,8 +83,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/notnil/chess"
-	"github.com/notnil/chess/uci"
+	"github.com/Yoshi-Exeler/chesslib"
+	"github.com/Yoshi-Exeler/chesslib/uci"
 )
 
 func main() {

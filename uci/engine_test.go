@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/notnil/chess"
-	"github.com/notnil/chess/uci"
+	chess "github.com/Yoshi-Exeler/chesslib"
+	"github.com/Yoshi-Exeler/chesslib/uci"
 )
 
 func Example() {

@@ -16,8 +16,8 @@ package main
 import (
     "fmt"
 
-    "github.com/notnil/chess"
-    "github.com/notnil/chess/opening"
+    "github.com/Yoshi-Exeler/chesslib"
+    "github.com/Yoshi-Exeler/chesslib/opening"
 )
 
 func main(){

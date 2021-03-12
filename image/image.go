@@ -7,9 +7,9 @@ import (
 	"io"
 	"strings"
 
+	chess "github.com/Yoshi-Exeler/chesslib"
+	"github.com/Yoshi-Exeler/chesslib/image/internal"
 	svg "github.com/ajstarks/svgo"
-	"github.com/notnil/chess"
-	"github.com/notnil/chess/image/internal"
 )
 
 // SVG writes the board SVG representation into the writer.
