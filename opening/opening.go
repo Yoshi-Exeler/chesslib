@@ -4,7 +4,7 @@ package opening
 import (
 	"bytes"
 
-	chess "rxchess"
+	chess "github.com/Yoshi-Exeler/chesslib"
 )
 
 // A Opening represents a specific sequence of moves from the staring position.

@@ -8,7 +8,7 @@ import (
 	"log"
 	"strings"
 
-	chess "rxchess"
+	chess "github.com/Yoshi-Exeler/chesslib"
 )
 
 // BookECO represents the Encyclopaedia of Chess Openings https://en.wikipedia.org/wiki/Encyclopaedia_of_Chess_Openings

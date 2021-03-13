@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	chess "rxchess"
-	opening "rxchess/opening"
+	chess "github.com/Yoshi-Exeler/chesslib"
+	opening "github.com/Yoshi-Exeler/chesslib/opening"
 )
 
 func ExampleFind() {
