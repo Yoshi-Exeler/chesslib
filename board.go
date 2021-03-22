@@ -59,6 +59,87 @@ func (b *Board) SquareMap() map[Square]Piece {
 	return m
 }
 
+var blackPawnLookup = []float32{
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+	0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+	0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3,
+	0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
+	0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+}
+
+func (b *Board) EvaluateFast() float32 {
+	score := float32(0)
+	for sqInt := 0; sqInt < 64; sqInt++ {
+		sqaInst := Square(sqInt)
+		p := b.Piece(sqaInst)
+		if p != NoPiece {
+			rank := sqaInst.Rank()
+			// If the current piece is our color
+			if p.Color() == Black {
+				switch p.Type() {
+				case Pawn:
+					score++
+					// Progressing Pieces is better than nothing
+					score += blackPawnLookup[sqInt]
+					break
+				case Bishop:
+					// Progressing Pieces is better than nothing
+					score += (7 - float32(rank)) * 0.1
+					score += 3.15
+					break
+				case Knight:
+					// Progressing Pieces is better than nothing
+					score += (7 - float32(rank)) * 0.1
+					score += 3
+					break
+				case Rook:
+					// Progressing Pieces is better than nothing
+					score += (7 - float32(rank)) * 0.1
+					score += 5
+					break
+				case Queen:
+					// Progressing Pieces is better than nothing
+					score += (7 - float32(rank)) * 0.1
+					score += 9
+					break
+				}
+			} else {
+				switch p.Type() {
+				case Pawn:
+					score--
+					// Progressing Pieces is better than nothing
+					score -= (float32(rank) - 1) * 0.1
+					break
+				case Bishop:
+					// Progressing Pieces is better than nothing
+					score -= (float32(rank)) * 0.1
+					score -= 3.15
+					break
+				case Knight:
+					// Progressing Pieces is better than nothing
+					score -= (float32(rank)) * 0.1
+					score -= 3
+					break
+				case Rook:
+					// Progressing Pieces is better than nothing
+					score -= (float32(rank)) * 0.1
+					score -= 5
+					break
+				case Queen:
+					// Progressing Pieces is better than nothing
+					score -= (float32(rank)) * 0.1
+					score -= 9
+					break
+				}
+			}
+		}
+	}
+	return score
+}
+
 // Evaluate evaluates the board using a static evaluation function
 func (b *Board) Evaluate(clr Color) float32 {
 	score := float32(0)
