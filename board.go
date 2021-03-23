@@ -59,25 +59,47 @@ func (b *Board) SquareMap() map[Square]Piece {
 	return m
 }
 
-var whitePawnLookup = []float32{
+var whitePawnPositionalValues = [64]float32{
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-	0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-	0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
-	0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3,
-	0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
+	-0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1,
+	-0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2,
+	-0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3,
+	-0.4, -0.4, -0.4, -0.4, -0.4, -0.4, -0.4, -0.4,
+	-0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5,
+	-0.0, -0.0, -0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+}
+
+var whitePiecePositionalValues = [64]float32{
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+	-0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1, -0.1,
+	-0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2, -0.2,
+	-0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3, -0.3,
+	-0.4, -0.4, -0.4, -0.4, -0.4, -0.4, -0.4, -0.4,
+	-0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5,
+	-0.6, -0.6, -0.6, -0.6, -0.6, -0.6, -0.6, -0.6,
+	-0.7, -0.7, -0.7, -0.7, -0.7, -0.7, -0.7, -0.7,
+}
+
+var blackPawnPositionalValues = [64]float32{
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+	0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
+	0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3,
+	0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
+	0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
+	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 }
 
-var bpl = []float32{
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+var blackPiecePositionalValues = [64]float32{
+	0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7, 0.7,
+	0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6,
 	0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
 	0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
 	0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3,
 	0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2,
 	0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1,
-	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 }
 
@@ -87,33 +109,32 @@ func (b *Board) EvaluateFast() float32 {
 		sqaInst := Square(sqInt)
 		p := b.Piece(sqaInst)
 		if p != NoPiece {
-			rank := sqaInst.Rank()
 			// If the current piece is our color
 			if p.Color() == Black {
 				switch p.Type() {
 				case Pawn:
 					score++
 					// Progressing Pieces is better than nothing
-					score += bpl[sqInt]
+					score += blackPawnPositionalValues[sqInt]
 					break
 				case Bishop:
 					// Progressing Pieces is better than nothing
-					score += (7 - float32(rank)) * 0.1
+					score += blackPiecePositionalValues[sqInt]
 					score += 3.15
 					break
 				case Knight:
 					// Progressing Pieces is better than nothing
-					score += (7 - float32(rank)) * 0.1
+					score += blackPiecePositionalValues[sqInt]
 					score += 3
 					break
 				case Rook:
 					// Progressing Pieces is better than nothing
-					score += (7 - float32(rank)) * 0.1
+					score += blackPiecePositionalValues[sqInt]
 					score += 5
 					break
 				case Queen:
 					// Progressing Pieces is better than nothing
-					score += (7 - float32(rank)) * 0.1
+					score += blackPiecePositionalValues[sqInt]
 					score += 9
 					break
 				}
@@ -122,26 +143,26 @@ func (b *Board) EvaluateFast() float32 {
 				case Pawn:
 					score--
 					// Progressing Pieces is better than nothing
-					score -= (float32(rank) - 1) * 0.1
+					score += whitePawnPositionalValues[sqInt]
 					break
 				case Bishop:
 					// Progressing Pieces is better than nothing
-					score -= (float32(rank)) * 0.1
+					score += whitePiecePositionalValues[sqInt]
 					score -= 3.15
 					break
 				case Knight:
 					// Progressing Pieces is better than nothing
-					score -= (float32(rank)) * 0.1
+					score += whitePiecePositionalValues[sqInt]
 					score -= 3
 					break
 				case Rook:
 					// Progressing Pieces is better than nothing
-					score -= (float32(rank)) * 0.1
+					score += whitePiecePositionalValues[sqInt]
 					score -= 5
 					break
 				case Queen:
 					// Progressing Pieces is better than nothing
-					score -= (float32(rank)) * 0.1
+					score += whitePiecePositionalValues[sqInt]
 					score -= 9
 					break
 				}
