@@ -70,7 +70,7 @@ var whitePawnLookup = []float32{
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 }
 
-var blackPawnLookup = []float32{
+var bpl = []float32{
 	0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 	0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
 	0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,
@@ -94,7 +94,7 @@ func (b *Board) EvaluateFast() float32 {
 				case Pawn:
 					score++
 					// Progressing Pieces is better than nothing
-					score += blackPawnLookup[sqInt]
+					score += bpl[sqInt]
 					break
 				case Bishop:
 					// Progressing Pieces is better than nothing
