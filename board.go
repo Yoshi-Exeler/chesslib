@@ -172,6 +172,119 @@ func (b *Board) EvaluateFast() float32 {
 	return score
 }
 
+var whitePawnPositionalValuesI16 = [64]int16{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	-1, -1, -1, -1, -1, -1, -1, -1,
+	-2, -2, -2, -2, -2, -2, -2, -2,
+	-3, -3, -3, -3, -3, -3, -3, -3,
+	-4, -4, -4, -4, -4, -4, -4, -4,
+	-5, -5, -5, -5, -5, -5, -5, -5,
+	0, 0, 0, 0, 0, 0, 0, 0,
+}
+
+var whitePiecePositionalValuesI16 = [64]int16{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	-1, -1, -1, -1, -1, -1, -1, -1,
+	-2, -2, -2, -2, -2, -2, -2, -2,
+	-3, -3, -3, -3, -3, -3, -3, -3,
+	-4, -4, -4, -4, -4, -4, -4, -4,
+	-5, -5, -5, -5, -5, -5, -5, -5,
+	-6, -6, -6, -6, -6, -6, -6, -6,
+	-7, -7, -7, -7, -7, -7, -7, -7,
+}
+
+var blackPawnPositionalValuesI16 = [64]int16{
+	0, 0, 0, 0, 0, 0, 0, 0,
+	5, 5, 5, 5, 5, 5, 5, 5,
+	4, 4, 4, 4, 4, 4, 4, 4,
+	3, 3, 3, 3, 3, 3, 3, 3,
+	2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 1, 1, 1, 1, 1, 1,
+	0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0,
+}
+
+var blackPiecePositionalValuesI16 = [64]int16{
+	7, 7, 7, 7, 7, 7, 7, 7,
+	6, 6, 6, 6, 6, 6, 6, 6,
+	5, 5, 5, 5, 5, 5, 5, 5,
+	4, 4, 4, 4, 4, 4, 4, 4,
+	3, 3, 3, 3, 3, 3, 3, 3,
+	2, 2, 2, 2, 2, 2, 2, 2,
+	1, 1, 1, 1, 1, 1, 1, 1,
+	0, 0, 0, 0, 0, 0, 0, 0,
+}
+
+func (b *Board) EvaluateFastI16() int16 {
+	score := int16(0)
+	for sqInt := 0; sqInt < 64; sqInt++ {
+		sqaInst := Square(sqInt)
+		p := b.Piece(sqaInst)
+		if p != NoPiece {
+			// If the current piece is our color
+			if p.Color() == Black {
+				switch p.Type() {
+				case Pawn:
+					score += 10
+					// Progressing Pieces is better than nothing
+					score += blackPawnPositionalValuesI16[sqInt]
+					break
+				case Bishop:
+					// Progressing Pieces is better than nothing
+					score += blackPiecePositionalValuesI16[sqInt]
+					score += 31
+					break
+				case Knight:
+					// Progressing Pieces is better than nothing
+					score += blackPiecePositionalValuesI16[sqInt]
+					score += 30
+					break
+				case Rook:
+					// Progressing Pieces is better than nothing
+					score += blackPiecePositionalValuesI16[sqInt]
+					score += 50
+					break
+				case Queen:
+					// Progressing Pieces is better than nothing
+					score += blackPiecePositionalValuesI16[sqInt]
+					score += 90
+					break
+				}
+			} else {
+				switch p.Type() {
+				case Pawn:
+					score -= 10
+					// Progressing Pieces is better than nothing
+					score += whitePawnPositionalValuesI16[sqInt]
+					break
+				case Bishop:
+					// Progressing Pieces is better than nothing
+					score += whitePiecePositionalValuesI16[sqInt]
+					score -= 31
+					break
+				case Knight:
+					// Progressing Pieces is better than nothing
+					score += whitePiecePositionalValuesI16[sqInt]
+					score -= 30
+					break
+				case Rook:
+					// Progressing Pieces is better than nothing
+					score += whitePiecePositionalValuesI16[sqInt]
+					score -= 50
+					break
+				case Queen:
+					// Progressing Pieces is better than nothing
+					score += whitePiecePositionalValuesI16[sqInt]
+					score -= 90
+					break
+				}
+			}
+		}
+	}
+	return score
+}
+
 // Evaluate evaluates the board using a static evaluation function
 func (b *Board) Evaluate(clr Color) float32 {
 	score := float32(0)
