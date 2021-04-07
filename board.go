@@ -513,6 +513,19 @@ func (b *Board) UnmarshalBinary(data []byte) error {
 	return nil
 }
 
+// InjectPiece allows the user to inject a piece into the Board ignoring all rules
+func (b *Board) InjectPiece(square int8, piece Piece) {
+	targetBB := bbForSquare(Square(square))
+	bbPromo := b.bbForPiece(piece)
+	b.setBBForPiece(piece, bbPromo|targetBB)
+}
+
+// DeletePieceOnSquare will remove the specified piece on the specified square, ignoring all rules
+func (b *Board) DeletePieceOnSquare(square int8, piece Piece) {
+	bb := bbForSquare(Square(square))
+	b.setBBForPiece(piece, bb & ^bb)
+}
+
 func (b *Board) update(m *Move) {
 	p1 := b.Piece(m.S1)
 	S1BB := bbForSquare(m.S1)
