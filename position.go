@@ -77,10 +77,10 @@ func (pos *Position) Update(m *Move) *Position {
 			board:           pos.board,
 			turn:            pos.turn.Other(),
 			castleRights:    pos.castleRights,
-			enPassantSquare: pos.updateEnPassantSquare(m),
+			enPassantSquare: pos.enPassantSquare,
 			halfMoveClock:   pos.halfMoveClock,
 			moveCount:       pos.moveCount,
-			inCheck:         m.HasTag(Check),
+			inCheck:         pos.inCheck,
 		}
 	}
 	moveCount := pos.moveCount
