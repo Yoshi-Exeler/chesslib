@@ -71,6 +71,18 @@ func StartingPosition() *Position {
 // Game's Move method.  This method is more performant for bots that
 // rely on the ValidMoves because it skips redundant validation.
 func (pos *Position) Update(m *Move) *Position {
+	// if a null move was made we only change the active turn
+	if m == nil {
+		return &Position{
+			board:           pos.board,
+			turn:            pos.turn.Other(),
+			castleRights:    pos.castleRights,
+			enPassantSquare: pos.updateEnPassantSquare(m),
+			halfMoveClock:   pos.halfMoveClock,
+			moveCount:       pos.moveCount,
+			inCheck:         m.HasTag(Check),
+		}
+	}
 	moveCount := pos.moveCount
 	if pos.turn == Black {
 		moveCount++
