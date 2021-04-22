@@ -515,6 +515,7 @@ func (b *Board) UnmarshalBinary(data []byte) error {
 
 // InjectPiece allows the user to inject a piece into the Board ignoring all rules
 func (b *Board) InjectPiece(square int8, piece Piece) {
+	fmt.Printf("square %v ,piece %v\n", square, piece)
 	targetBB := bbForSquare(Square(square))
 	bbPromo := b.bbForPiece(piece)
 	b.setBBForPiece(piece, bbPromo|targetBB)
