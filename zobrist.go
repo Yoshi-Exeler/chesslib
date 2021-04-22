@@ -72,7 +72,7 @@ func generateZobristHash(pos *Position) uint64 {
 	return hash
 }
 
-func updateZobristHash(pos *Position, mov *Move) uint64 {
+func UpdateZobristHash(pos *Position, mov *Move) uint64 {
 	hash := pos.hash
 	turn := pos.turn
 	srcSq := mov.S1

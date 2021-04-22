@@ -99,7 +99,7 @@ func (pos *Position) Update(m *Move) *Position {
 	b.update(m)
 	hash := uint64(0)
 	if pos.hash != 0 {
-		hash = updateZobristHash(pos, m)
+		hash = UpdateZobristHash(pos, m)
 	}
 	return &Position{
 		board:           b,
