@@ -159,7 +159,7 @@ func encodePGN(g *Game) string {
 	s += "\n"
 	for i, move := range g.moves {
 		pos := g.positions[i]
-		txt := g.notation.Encode(pos, move)
+		txt := g.Notation.Encode(pos, move)
 		if i%2 == 0 {
 			s += fmt.Sprintf("%d.%s", (i/2)+1, txt)
 		} else {

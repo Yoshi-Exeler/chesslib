@@ -65,7 +65,7 @@ type TagPair struct {
 
 // A Game represents a single chess game.
 type Game struct {
-	notation             Notation
+	Notation             Notation
 	tagPairs             []*TagPair
 	moves                []*Move
 	positions            []*Position
