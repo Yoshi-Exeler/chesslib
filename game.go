@@ -128,7 +128,7 @@ func TagPairs(tagPairs []*TagPair) func(*Game) {
 // to be used in the NewGame constructor.
 func UseNotation(n Notation) func(*Game) {
 	return func(g *Game) {
-		g.notation = n
+		g.Notation = n
 	}
 }
 
@@ -138,7 +138,7 @@ func UseNotation(n Notation) func(*Game) {
 func NewGame(options ...func(*Game)) *Game {
 	pos := StartingPosition()
 	game := &Game{
-		notation:  AlgebraicNotation{},
+		Notation:  AlgebraicNotation{},
 		moves:     []*Move{},
 		pos:       pos,
 		positions: []*Position{pos},
@@ -171,7 +171,7 @@ func (g *Game) Move(m *Move) error {
 // and calls the Move function.  An error is returned if
 // the move can't be decoded or the move is invalid.
 func (g *Game) MoveStr(s string) error {
-	m, err := g.notation.Decode(g.pos, s)
+	m, err := g.Notation.Decode(g.pos, s)
 	if err != nil {
 		return err
 	}
@@ -377,7 +377,7 @@ func (g *Game) copy(game *Game) {
 func (g *Game) Clone() *Game {
 	return &Game{
 		tagPairs:  g.TagPairs(),
-		notation:  g.notation,
+		Notation:  g.Notation,
 		moves:     g.Moves(),
 		positions: g.Positions(),
 		pos:       g.pos,
